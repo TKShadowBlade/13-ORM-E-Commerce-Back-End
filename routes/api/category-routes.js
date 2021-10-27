@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
         attributes: ['id', 'product_name', 'price', 'stock', 'category_id']
       }
     ]
-  }).then(categoryData => res.json(categoryData))
+  }).then(dbCategoryData => res.json(dbCategoryData))
   .catch(err => {
     res.status(500).json(err);
   });
@@ -34,12 +34,12 @@ router.get('/:id', (req, res) => {
         attributes: ['id', 'product_name', 'price', 'stock', 'category_id']
       }
     ]
-  }).then(categoryData => {
-    if (!categoryData) {
+  }).then(dbCategoryData => {
+    if (!dbCategoryData) {
       res.status(404).json({message: 'No category under this ID'});
       return;
     }
-    res.json(categoryData);
+    res.json(dbCategoryData);
   }).catch(err => res.status(500).json(err));
 });
 
@@ -48,7 +48,7 @@ router.post('/', (req, res) => {
   Category.create ({
     category_name: req.body.category_name
   })
-  .then(categoryData => res.json(categoryData))
+  .then(dbCategoryData => res.json(dbCategoryData))
   .catch(err => res.status(500).json(err));
 });
 
@@ -58,12 +58,12 @@ router.put('/:id', (req, res) => {
     where: {
       id: req.params.id
     }
-  }).then(categoryData => {
-    if (!categoryData[0]) {
+  }).then(dbCategoryData => {
+    if (!dbCategoryData[0]) {
       res.status(404).json({message: 'No category under this ID'});
       return;
     }
-    res.json(categoryData);
+    res.json(dbCategoryData);
   }).catch(err => res.status(500).json(err));
 });
 
@@ -73,12 +73,12 @@ router.delete('/:id', (req, res) => {
     where: {
       id: req.params.id
     }
-  }).then(categoryData => {
-    if(!categoryData) {
+  }).then(dbCategoryData => {
+    if(!dbCategoryData) {
       res.status(404).json({message: 'No category under this ID'});
       return;
     }
-    res.json(categoryData);
+    res.json(dbCategoryData);
   }).catch(err => res.status(500).json(err))
 });
 
